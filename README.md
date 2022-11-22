@@ -1,4 +1,4 @@
-# pytorch-pwc
+# Key frame extraction based on global motion statistics for team-sport videos
 This is a personal reimplementation of PWC-Net [1] using PyTorch. Should you be making use of this work, please cite the paper accordingly. Also, make sure to adhere to the <a href="https://github.com/NVlabs/PWC-Net#license">licensing terms</a> of the authors. Should you be making use of this particular implementation, please acknowledge it appropriately [2].
 
 <a href="https://arxiv.org/abs/1709.02371" rel="Paper"><img src="http://www.arxiv-sanity.com/static/thumbs/1709.02371v1.pdf.jpg" alt="Paper" width="100%"></a>
