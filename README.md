@@ -7,7 +7,8 @@ For the original version of this work, please see: https://github.com/NVlabs/PWC
 <br />
 Another optical flow implementation from me: https://github.com/sniklaus/pytorch-pwc
 <br />
-For the related patent of this work, please see: <a href="https://patents.google.com/patent/CN113032631A/en?oq=CN113032631A">Team sports video key frame extraction method based on global motion statistical characteristics</a>
+For the related patent of this work, please see:
+<a href="https://patents.google.com/patent/CN113032631A/en?oq=CN113032631A">Team sports video key frame extraction method based on global motion statistical characteristics</a>
 <br />
 Another patent of video game shots extraction: <a href="https://patents.google.com/patent/CN113033308A/en?oq=CN113033308A">Team sports video game lens extraction method based on color features</a> (In the paper, I used "shot" as a video sequence photographed continuously by one camera, so the "lens" showed in the title of this patent have been mistranslated.)
 
