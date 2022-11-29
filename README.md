@@ -11,7 +11,7 @@ For the related patent of this work, please see:
 <br />
 <a href="https://patents.google.com/patent/CN113032631A/en?oq=CN113032631A">Team sports video key frame extraction method based on global motion statistical characteristics</a>
 <br />
-<a href="https://patents.google.com/patent/CN113033308A/en?oq=CN113033308A">Team sports video game lens extraction method based on color features</a> (In the paper, I used "shot" as a video sequence photographed continuously by one camera, so the "lens" showed in the title of this patent have been mistranslated.)
+<a href="https://patents.google.com/patent/CN113033308A/en?oq=CN113033308A">Team sports video game lens extraction method based on color features</a> (In the paper, I used "shot" as a video sequence photographed continuously by one camera, so the "lens" showed in the title of this patent may have been mistranslated.)
 
 ## background
 The authors of PWC-Net are thankfully already providing a reference implementation in PyTorch. However, its initial version did not reach the performance of the original Caffe version. This is why I created this repositroy, in which I replicated the performance of the official Caffe version by utilizing its weights.
