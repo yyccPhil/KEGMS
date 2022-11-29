@@ -7,9 +7,7 @@ For the original version of this work, please see: https://github.com/NVlabs/PWC
 <br />
 Another optical flow implementation from me: https://github.com/sniklaus/pytorch-liteflownet
 <br />
-And another optical flow implementation from me: https://github.com/sniklaus/pytorch-unflow
-<br />
-Yet another optical flow implementation from me: https://github.com/sniklaus/pytorch-spynet
+Other optical flow implementations from me: [pytorch-pwc](https://github.com/sniklaus/pytorch-pwc)
 <br />
 For the related patent of this work, please see: <a href="https://patents.google.com/patent/CN113032631A/en?oq=CN113032631A">Team sports video key frame extraction method based on global motion statistical characteristics</a>
 <br />
