@@ -40,7 +40,20 @@ As stated in the <a href="https://github.com/NVlabs/PWC-Net#license">licensing t
 
 ## references
 ```
-[1]  @inproceedings{Sun_CVPR_2018,
+[1]  @article{yuan2022key,
+         title={Key frame extraction based on global motion statistics for team-sport videos},
+         author={Yuan, Yuan and Lu, Zhe and Yang, Zhou and Jian, Meng and Wu, Lifang and Li, Zeyu and Liu, Xu},
+         journal={Multimedia Systems},
+         volume={28},
+         number={2},
+         pages={387--401},
+         year={2022},
+         publisher={Springer}
+     }
+```
+
+```
+[2]  @inproceedings{Sun_CVPR_2018,
          author = {Deqing Sun and Xiaodong Yang and Ming-Yu Liu and Jan Kautz},
          title = {{PWC-Net}: {CNNs} for Optical Flow Using Pyramid, Warping, and Cost Volume},
          booktitle = {IEEE Conference on Computer Vision and Pattern Recognition},
@@ -49,7 +62,7 @@ As stated in the <a href="https://github.com/NVlabs/PWC-Net#license">licensing t
 ```
 
 ```
-[2]  @misc{pytorch-pwc,
+[3]  @misc{pytorch-pwc,
          author = {Simon Niklaus},
          title = {A Reimplementation of {PWC-Net} Using {PyTorch}},
          year = {2018},
