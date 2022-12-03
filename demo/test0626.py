@@ -206,26 +206,26 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.FilePathLb_2.setText(_translate("MainWindow", "读取路径："))
+        self.FilePathLb_2.setText(_translate("MainWindow", "读取路径："))   # read_dir
         self.FilePathBt_2.setText(_translate("MainWindow", "…"))
         self.FilePathBt.setText(_translate("MainWindow", "…"))
-        self.FilePathLb.setText(_translate("MainWindow", "保存路径："))
+        self.FilePathLb.setText(_translate("MainWindow", "保存路径："))     # save_dir
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "Tab 1"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "Tab 2"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("MainWindow", "页"))
-        self.ExitBt.setText(_translate("MainWindow", "退出"))
-        self.StopBt.setText(_translate("MainWindow", "暂停"))
-        self.label.setText(_translate("MainWindow", "当前帧数："))
-        self.label_2.setText(_translate("MainWindow", "图像尺寸："))
-        self.label_3.setText(_translate("MainWindow", "镜头："))
-        self.pushButton.setText(_translate("MainWindow", "跳转"))
-        self.RecordBt.setText(_translate("MainWindow", "保存"))
-        self.ShowBt.setText(_translate("MainWindow", "开始"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("MainWindow", "页"))   # page
+        self.ExitBt.setText(_translate("MainWindow", "退出"))           # quit
+        self.StopBt.setText(_translate("MainWindow", "暂停"))           # pause
+        self.label.setText(_translate("MainWindow", "当前帧数："))      # current number of frame
+        self.label_2.setText(_translate("MainWindow", "图像尺寸："))    # frame size
+        self.label_3.setText(_translate("MainWindow", "镜头："))        # number of shot
+        self.pushButton.setText(_translate("MainWindow", "跳转"))       # jump to
+        self.RecordBt.setText(_translate("MainWindow", "保存"))         # save
+        self.ShowBt.setText(_translate("MainWindow", "开始"))           # start
 
 class CamShow(QMainWindow,Ui_MainWindow):
     def __del__(self):
         try:
-            self.camera.release()  # 释放资源
+            self.camera.release()  # release resources
         except:
             return
     def __init__(self,parent=None):
@@ -235,12 +235,12 @@ class CamShow(QMainWindow,Ui_MainWindow):
         self.PrepParameters()
         self.CallBackFunctions()
         self.time_map = {}
-        # 设置数据层次结构，4行4列
-        self.setWindowTitle('视频摘要提取系统')
+        # Set the data hierarchy, 4 rows × 4 columns
+        self.setWindowTitle('视频摘要提取系统') # Video Summarization Extraction System
         self.model = QStandardItemModel(0, 4)
-        # 设置水平方向四个头标签文本内容
-        self.model.setHorizontalHeaderLabels(['镜头', '起始帧', '终止帧', '帧数'])
-        # 设置每个位置的文本值
+        # Set the text of the 4 horizontal header labels
+        self.model.setHorizontalHeaderLabels(['镜头', '起始帧', '终止帧', '帧数'])  # Shot, Start Frame, End Frame, Number of Frame
+        # set the text for each position
         self.Timer=QTimer()
         self.Timer.timeout.connect(self.TimerOutFun)
         self.Timer1 = QTimer()
@@ -298,39 +298,39 @@ class CamShow(QMainWindow,Ui_MainWindow):
         self.ExitBt.clicked.connect(self.ExitApp)
         self.pushButton.clicked.connect(self.push)
     def StartCamera(self):
-        if self.ShowBt.text() == '开始':
-            self.ShowBt.setText('结束')
+        if self.ShowBt.text() == '开始':        # start
+            self.ShowBt.setText('结束')         # end
             self.StopBt.setEnabled(True)
             self.RecordBt.setEnabled(True)
-            self.RecordBt.setText('录像')
+            self.RecordBt.setText('录像')       # record
             self.Timer.start(1)
             self.timelb=time.clock()
-            self.MsgTE.setPlainText('开始')
+            self.MsgTE.setPlainText('开始')     # start
             self.numlist = []
             for i in range(self.hLay.count()):
                 self.hLay.itemAt(i).widget().deleteLater()
             for i in range(self.hLay1.count()):
                 self.hLay1.itemAt(i).widget().deleteLater()
         else:
-            self.ShowBt.setText('开始')
-            self.StopBt.setText('暂停')
-            self.RecordBt.setText('录像')
+            self.ShowBt.setText('开始')         # start
+            self.StopBt.setText('暂停')         # pause
+            self.RecordBt.setText('录像')       # record
             self.StopBt.setEnabled(False)
             self.RecordBt.setEnabled(False)
             self.ShowBt.setEnabled(False)
             self.camera.release()
             cv2.destroyAllWindows()
             self.Timer.stop()
-            self.MsgTE.setPlainText('结束')
+            self.MsgTE.setPlainText('结束')     # end
             self.Image_num = 2
     def SetFilePath(self):
-        dirname = QFileDialog.getExistingDirectory(self, '浏览', '.')
+        dirname = QFileDialog.getExistingDirectory(self, '浏览', '.')   # scan
         if dirname:
             self.FilePathLE.setText(dirname)
             self.RecordPath=dirname+'/'
             self.MsgTE.setPlainText(dirname)
     def SetFilePath1(self):
-        dirname = QFileDialog.getOpenFileName(self, '浏览2','', 'Video files(*.avi *.mp4 *.wmv *.MOV)')
+        dirname = QFileDialog.getOpenFileName(self, '浏览2','', 'Video files(*.avi *.mp4 *.wmv *.MOV)') # scan2
         if dirname:
             self.FilePathLE_2.setText(dirname[0])
             self.RecordPath_2=dirname[0]
@@ -339,9 +339,9 @@ class CamShow(QMainWindow,Ui_MainWindow):
             self.ShowBt.setEnabled(True)
             self.model.removeRows(0, self.num1)
             self.Image_num = 2
-            self.ShowBt.setText('开始')
-            self.StopBt.setText('暂停')
-            self.RecordBt.setText('录像')
+            self.ShowBt.setText('开始')     # start
+            self.StopBt.setText('暂停')     # pause
+            self.RecordBt.setText('录像')   # record
             self.StopBt.setEnabled(False)
             self.RecordBt.setEnabled(False)
             self.ShowBt.setEnabled(True)
@@ -350,7 +350,7 @@ class CamShow(QMainWindow,Ui_MainWindow):
     def mouseMoveEvent(self, event):
         s = event.windowPos()
         snum = int(s.x()) - 431
-        if snum in self.cen1 and 524 < int(s.y()) < 546 and self.StopBt.text() == '继续':
+        if snum in self.cen1 and 524 < int(s.y()) < 546 and self.StopBt.text() == '继续':   # continue
             xnum = snum/600*self.number
             self.cap.set(cv2.CAP_PROP_POS_FRAMES, xnum)
             x,y = self.cap.read()
@@ -378,7 +378,7 @@ class CamShow(QMainWindow,Ui_MainWindow):
 
     def insertButton(self,i):
         widget = QWidget()
-        self.updateBtn = QPushButton('关键帧'+str(i),self)
+        self.updateBtn = QPushButton('关键帧'+str(i),self)  # keyframe
         self.updateBtn.clicked.connect(lambda: self.on_click(self.sender().text()))
         hLayout = QHBoxLayout()
         hLayout.addWidget(self.updateBtn)
@@ -435,7 +435,7 @@ class CamShow(QMainWindow,Ui_MainWindow):
         self.tableWidget_2.setColumnCount(1)
         self.tableWidget_2.setRowCount(1)
         self.tableWidget_2.setColumnWidth(0, 320)
-        self.tableWidget_2.setItem(0, 0, QTableWidgetItem('关键帧为:' + ",".join(str(x) for x in cen)))
+        self.tableWidget_2.setItem(0, 0, QTableWidgetItem('关键帧为:' + ",".join(str(x) for x in cen))) # keyframe
         QTableWidget.resizeRowsToContents(self.tableWidget_2)
         self.area1 = Paintarea1()
         self.area1.getnum(self.cen1)
@@ -487,14 +487,14 @@ class CamShow(QMainWindow,Ui_MainWindow):
                             self.num1 += 1
                             self.time_map[self.num1] = [self.pre + 1, self.Image_num]
                             self.model.appendRow([
-                                QStandardItem('镜头'+str(self.num1)),
+                                QStandardItem('镜头'+str(self.num1)),   # shot
                                 QStandardItem(str(self.pre+1)),
                                 QStandardItem(str(self.Image_num)),
                                 QStandardItem(str(self.Image_num - self.pre)),
                             ])
                             self.row_cnt = self.tableWidget.rowCount()
                             self.tableWidget.insertRow(self.row_cnt)
-                            self.tableWidget.setItem(self.num1 - 1, 0, QTableWidgetItem('镜头'+str(self.num1)))
+                            self.tableWidget.setItem(self.num1 - 1, 0, QTableWidgetItem('镜头'+str(self.num1))) # shot
                             self.tableWidget.setCellWidget(self.num1-1, 1, self.insertButton(self.num1))
                             QTableWidget.resizeRowsToContents(self.tableWidget)
                             # hists=[]
@@ -540,7 +540,7 @@ class CamShow(QMainWindow,Ui_MainWindow):
             self.tableWidget.setColumnCount(2)
             self.tableWidget.setColumnWidth(0, 160)
             self.tableWidget.setColumnWidth(1, 160)
-            self.tableWidget.setHorizontalHeaderLabels(['镜头', '关键帧'])
+            self.tableWidget.setHorizontalHeaderLabels(['镜头', '关键帧'])  # shot, keyframe
             layout1 = QVBoxLayout()
             layout1.addWidget(self.tableWidget)
             self.setLayout(layout1)
@@ -558,21 +558,21 @@ class CamShow(QMainWindow,Ui_MainWindow):
         self.DispLb.setPixmap(QPixmap(qimg))
         self.DispLb.show()
     def StopCamera(self):
-        if self.StopBt.text()=='暂停':
-            self.StopBt.setText('继续')
-            self.RecordBt.setText('保存')
+        if self.StopBt.text()=='暂停':      # pause
+            self.StopBt.setText('继续')     # continue
+            self.RecordBt.setText('保存')   # save
             self.Timer.stop()
-            self.MsgTE.setPlainText("暂停")
+            self.MsgTE.setPlainText("暂停") # pause
             self.pushButton.setEnabled(True)
-        elif self.StopBt.text()=='继续':
-            self.StopBt.setText('暂停')
-            self.RecordBt.setText('录像')
+        elif self.StopBt.text()=='继续':    # continue
+            self.StopBt.setText('暂停')     # pause
+            self.RecordBt.setText('录像')   # record
             self.Timer.start(1)
-            self.MsgTE.setPlainText('开始')
+            self.MsgTE.setPlainText('开始') # start
             self.pushButton.setEnabled(False)
     def RecordCamera(self):
         tag=self.RecordBt.text()
-        if tag=='保存':
+        if tag=='保存': # save
             try:
                 image_name=self.RecordPath+'image'+time.strftime('%Y%m%d%H%M%S',time.localtime(time.time()))+'.jpg'
                 # print(image_name)
@@ -582,8 +582,8 @@ class CamShow(QMainWindow,Ui_MainWindow):
             except Exception as e:
                 self.MsgTE.clear()
                 self.MsgTE.setPlainText(str(e))
-        elif tag=='录像':
-            self.RecordBt.setText('停止')
+        elif tag=='录像':   # record
+            self.RecordBt.setText('停止')   # end
 
             video_name = self.RecordPath + 'video' + time.strftime('%Y%m%d%H%M%S',time.localtime(time.time())) + '.avi'
             fps = self.FmRateLCD.value()
@@ -594,8 +594,8 @@ class CamShow(QMainWindow,Ui_MainWindow):
             self.MsgTE.setPlainText('Video recording...')
             self.StopBt.setEnabled(False)
             self.ExitBt.setEnabled(False)
-        elif tag == '停止':
-            self.RecordBt.setText('录像')
+        elif tag == '停止': # end
+            self.RecordBt.setText('录像')   # record
             self.video_writer.release()
             self.RecordFlag = 0
             self.MsgTE.setPlainText('Video saved.')
@@ -642,17 +642,17 @@ class CamShow(QMainWindow,Ui_MainWindow):
         return b
 
     def hierarchy_cluster(self, data, method='average', threshold=35000.0):
-        '''层次聚类
+        '''Hierarchical Clustering
 
         Arguments:
-            data [[0, float, ...], [float, 0, ...]] -- 文档 i 和文档 j 的距离
+            data [[0, float, ...], [float, 0, ...]] -- the distance between i and j
 
         Keyword Arguments:
-            method {str} -- [linkage的方式： single、complete、average、centroid、median、ward] (default: {'average'})
-            threshold {float} -- 聚类簇之间的距离
+            method {str} -- [linkage methods： single、complete、average、centroid、median、ward] (default: {'average'})
+            threshold {float} -- the distance between the clusters
         Return:
-            cluster_number int -- 聚类个数
-            cluster [[idx1, idx2,..], [idx3]] -- 每一类下的索引
+            cluster_number int
+            cluster [[idx1, idx2,..], [idx3]]
         '''
         data = np.array(data)
 
@@ -665,13 +665,13 @@ class CamShow(QMainWindow,Ui_MainWindow):
         return num_clusters, indices
 
     def get_cluster_indices(self,cluster_assignments):
-        '''映射每一类至原数据索引
+        '''Map each class to the original data index
 
         Arguments:
-            cluster_assignments 层次聚类后的结果
+            cluster_assignments -- the result after hierarchical clustering
 
         Returns:
-            [[idx1, idx2,..], [idx3]] -- 每一类下的索引
+            [[idx1, idx2,..], [idx3]] -- index of every cluster
         '''
         n = cluster_assignments.max()
         indices = []
@@ -693,10 +693,10 @@ class CamShow(QMainWindow,Ui_MainWindow):
     #             Z = sch.linkage(disMat, method='average', metric='euclidean')
     #             plt.ylim(0, 1)
     #             cluster = sch.fcluster(Z, t=1.5 * th, criterion='distance')
-    #             cluster_one = self.quchong(cluster)  # 标签去重复
-    #             # 将原始数据做归一化处理
+    #             cluster_one = self.quchong(cluster)  # label deduplication
+    #             # normalize raw data
     #             points_white = whiten(points_a)
-    #             # 聚类中心点
+    #             # cluster centroid
     #             centroid = kmeans(points_white, max(cluster))[0]
     #             index = 0
     #             temp = 200

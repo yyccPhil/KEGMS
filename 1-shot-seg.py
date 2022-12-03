@@ -42,17 +42,17 @@ def barMinus_crop(src_1,src_2):
 
 
 def hierarchy_cluster(data, method='average', threshold=35.0):
-    '''层次聚类
+    '''Hierarchical Clustering
 
     Arguments:
-        data [[0, float, ...], [float, 0, ...]] -- 文档 i 和文档 j 的距离
+        data [[0, float, ...], [float, 0, ...]] -- the distance between i and j
 
     Keyword Arguments:
-        method {str} -- [linkage的方式： single、complete、average、centroid、median、ward] (default: {'average'})
-        threshold {float} -- 聚类簇之间的距离
+        method {str} -- [linkage methods： single、complete、average、centroid、median、ward] (default: {'average'})
+        threshold {float} -- the distance between the clusters
     Return:
-        cluster_number int -- 聚类个数
-        cluster [[idx1, idx2,..], [idx3]] -- 每一类下的索引
+        cluster_number int
+        cluster [[idx1, idx2,..], [idx3]]
     '''
     data = np.array(data)
 
@@ -64,9 +64,8 @@ def hierarchy_cluster(data, method='average', threshold=35.0):
 
     dendrogram(Z)
     plt.xlabel("serial number of global optical flow image   number of frame", fontsize=8)
-    # 设置y轴的文本，用于描述y轴代表的是什么
     plt.ylabel("distance sum of histograms", fontsize=28)
-    plt.title('Process of Hierarchical Clustering', fontsize=48)  # 设置图表标题
+    plt.title('Process of Hierarchical Clustering', fontsize=48)
     plt.tick_params(labelsize=25)
 
     plt.show()
@@ -75,13 +74,13 @@ def hierarchy_cluster(data, method='average', threshold=35.0):
 
 
 def get_cluster_indices(cluster_assignments):
-    '''映射每一类至原数据索引
+    '''Map each class to the original data index
 
     Arguments:
-        cluster_assignments 层次聚类后的结果
+        cluster_assignments -- the result after hierarchical clustering
 
     Returns:
-        [[idx1, idx2,..], [idx3]] -- 每一类下的索引
+        [[idx1, idx2,..], [idx3]] -- index of every cluster
     '''
     n = cluster_assignments.max()
     indices = []
@@ -91,7 +90,7 @@ def get_cluster_indices(cluster_assignments):
     return indices
 
 
-cap = cv2.VideoCapture('Untitled1.wmv')    # 将这个改为手动选择文件
+cap = cv2.VideoCapture('Untitled1.wmv')
 ret, lastframe3 = cap.read()
 ret, lastframe2 = cap.read()
 ret, lastframe1 = cap.read()
@@ -110,8 +109,8 @@ a = int(h / cols) * int(w / rows)
 threshold = 0.15
 
 dir = 'E:/project/capstone/data/origin_img/test'
-os.makedirs(os.path.join(dir, 'nfl', str(o1)));   # 在这儿更改保存位置
-save_dir = os.path.join(dir, 'nfl')     # 在这儿更改保存位置
+os.makedirs(os.path.join(dir, 'nfl', str(o1)));     # video frame save path
+save_dir = os.path.join(dir, 'nfl')                 # video frame save path
 # delete_dir = os.path.join(dir, 'delete_test')
 # isExists = os.path.exists(delete_dir)
 # if not isExists:
@@ -197,7 +196,7 @@ for i in range(0, o1+1):
 arr = np.array(arr)
 arr = np.squeeze(arr)
 
-# 把二维矩阵变成对角矩阵
+# Convert two-dimensional matrix into diagonal matrix
 # c, r = arr.shape
 # for i in range(r):
 #     for j in range(i, c):
@@ -227,8 +226,8 @@ img_num_list = []
 for i in max_ind:
     img_list = natsorted(glob.glob(save_dir + '//' + '{}'.format(i) + '/*.jpg'))
     img_num = len(img_list)
-    if dx_b['{}'.format(i)] > 100 and dx_g['{}'.format(i)] > 100 and dx_r['{}'.format(i)] > 100:      # 防止切割错误导致文件数量过大被认为是最大数量文件夹
-        print('分割错误数量过大：{}'.format(i))
+    if dx_b['{}'.format(i)] > 100 and dx_g['{}'.format(i)] > 100 and dx_r['{}'.format(i)] > 100:      # Prevent the folder with excessive files caused by segmentation mistake to be considered as the folder with the maximum number of files
+        print('segmentation mistake：{}'.format(i))
     else:
         img_num_list.append(img_num)
         d_img_num['{}'.format(img_num)] = i
@@ -237,7 +236,7 @@ m = max(img_num_list)
 n = d_img_num['{}'.format(m)]
 print(n, m)
 
-# first_end = [0, o1]       # 单独计算首尾文件夹RGB均值
+# first_end = [0, o1]       # Separately calculate the RGB mean value of the first and last folder
 # for i in first_end:
 #     img_list = natsorted(glob.glob(save_dir + '//' + '{}'.format(i) + '/*.jpg'))
 #     img_num = len(img_list)
@@ -275,4 +274,4 @@ for time in time_list:
         path = save_dir + '//' + '{}'.format(time)
         shutil.rmtree(path)
 
-# 再优化的话我想到的办法就是转换成HSV颜色空间，先转换图像的空间，再计算均值比对，让一些恰巧在阈值内的图片与比赛图片区分开
+# For further optimization, first convert to HSV color space, and then compare the mean values, so that some images that happen to be within the threshold can be distinguished from the game images.
