@@ -34,7 +34,7 @@ I am afraid that I cannot guarantee that this reimplementation is correct. Howev
 
 ## Video Summary Extraction System (demo)
 
-[![Watch the video](https://img.youtu.be/45_hrIlDgvI/maxresdefault.jpg)](https://youtu.be/45_hrIlDgvI)
+[![Watch the video](Snipaste_2022-12-02_20-39-57.png)](https://youtu.be/45_hrIlDgvI)
 
 ## license
 As stated in the <a href="https://github.com/NVlabs/PWC-Net#license">licensing terms</a> of the authors of the paper, the models are free for non-commercial share-alike purpose. Please make sure to further consult their licensing terms.
