@@ -186,18 +186,18 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.FilePathLb_2.setText(_translate("MainWindow", "读取路径："))
+        self.FilePathLb_2.setText(_translate("MainWindow", "读取路径："))   # read_dir
         self.FilePathBt_2.setText(_translate("MainWindow", "…"))
         self.FilePathBt.setText(_translate("MainWindow", "…"))
-        self.FilePathLb.setText(_translate("MainWindow", "保存路径："))
+        self.FilePathLb.setText(_translate("MainWindow", "保存路径："))     # save_dir
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "Tab 1"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "Tab 2"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("MainWindow", "页"))
-        self.ExitBt.setText(_translate("MainWindow", "退出"))
-        self.StopBt.setText(_translate("MainWindow", "暂停"))
-        self.label.setText(_translate("MainWindow", "当前帧数："))
-        self.label_2.setText(_translate("MainWindow", "图像尺寸："))
-        self.label_3.setText(_translate("MainWindow", "镜头："))
-        self.pushButton.setText(_translate("MainWindow", "跳转"))
-        self.RecordBt.setText(_translate("MainWindow", "保存"))
-        self.ShowBt.setText(_translate("MainWindow", "开始"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("MainWindow", "页"))   # page
+        self.ExitBt.setText(_translate("MainWindow", "退出"))           # quit
+        self.StopBt.setText(_translate("MainWindow", "暂停"))           # pause
+        self.label.setText(_translate("MainWindow", "当前帧数："))      # current number of frame
+        self.label_2.setText(_translate("MainWindow", "图像尺寸："))    # frame size
+        self.label_3.setText(_translate("MainWindow", "镜头："))        # number of shot
+        self.pushButton.setText(_translate("MainWindow", "跳转"))       # jump to
+        self.RecordBt.setText(_translate("MainWindow", "保存"))         # save
+        self.ShowBt.setText(_translate("MainWindow", "开始"))           # start

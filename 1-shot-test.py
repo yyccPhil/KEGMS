@@ -39,7 +39,7 @@ def barMinus_crop(src_1,src_2):
     return b
 
 
-cap = cv2.VideoCapture('Untitled1.mp4')    # 将这个改为手动选择文件
+cap = cv2.VideoCapture('Untitled1.mp4')    # team-sport video
 ret, lastframe3 = cap.read()
 ret, lastframe2 = cap.read()
 ret, lastframe1 = cap.read()
@@ -58,8 +58,8 @@ a = int(h / cols) * int(w / rows)
 threshold = 0.15
 
 dir = 'E:/1/'
-os.makedirs(os.path.join(dir, 'hockey', str(o1)));   # 在这儿更改保存位置
-save_dir = os.path.join(dir, 'hockey')     # 在这儿更改保存位置
+os.makedirs(os.path.join(dir, 'hockey', str(o1)));      # video frame save path
+save_dir = os.path.join(dir, 'hockey')                  # video frame save path
 # delete_dir = os.path.join(dir, 'delete_test')
 # isExists = os.path.exists(delete_dir)
 # if not isExists:
@@ -109,10 +109,10 @@ cap.release()
 cv2.destroyAllWindows()
 #
 # img_num_list = []
-# for i in range(1, o1):                     # 剔除0号和末号
+# for i in range(1, o1):                    # remove [0] and [-1] frames
 #     img_list = natsorted(glob.glob(save_dir + '//' + '{}'.format(i) + '/*.jpg'))
 #     img_num = len(img_list)
-#     if img_num <= 10:                   # 判断图片数量时，文件夹内图片的数量还得大于50，不然直接删
+#     if img_num <= 10:                     # delete folders that contain too few pictures, which are shots resulting from segmentation mistakes
 #         path = save_dir + '//' + '{}'.format(i)
 #         shutil.rmtree(path)
-#         print('小于80：{}'.format(i))
+#         print('<80：{}'.format(i))
