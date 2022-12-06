@@ -456,4 +456,4 @@ if __name__ == '__main__':
                     save_count += 1
 
                 xls_save_path = os.path.join(save_dir, game, event)
-                workbook.save(xls_save_path + '/mix_{}.xls'.format(event))  # 正式存的时候用
+                workbook.save(xls_save_path + '/mix_{}.xls'.format(event))
