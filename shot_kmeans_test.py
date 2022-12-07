@@ -41,7 +41,7 @@ def barMinus_crop(src_1,src_2):
     return b
 
 
-cap = cv2.VideoCapture('Untitled1.wmv')    # 将这个改为手动选择文件
+cap = cv2.VideoCapture('Untitled1.wmv')
 ret, lastframe3 = cap.read()
 ret, lastframe2 = cap.read()
 ret, lastframe1 = cap.read()
@@ -60,8 +60,8 @@ a = int(h / cols) * int(w / rows)
 threshold = 0.15
 
 dir = 'E:/project/capstone/data/origin_img/test'
-os.makedirs(os.path.join(dir, 'nfl', str(o1)));   # 在这儿更改保存位置
-save_dir = os.path.join(dir, 'nfl')     # 在这儿更改保存位置
+os.makedirs(os.path.join(dir, 'nfl', str(o1)));     # video frame save path
+save_dir = os.path.join(dir, 'nfl')                 # video frame save path
 # delete_dir = os.path.join(dir, 'delete_test')
 # isExists = os.path.exists(delete_dir)
 # if not isExists:
@@ -147,7 +147,7 @@ for i in range(0, o1+1):
 arr = np.array(arr)
 arr = np.squeeze(arr)
 
-# 把二维矩阵变成对角矩阵
+# Convert two-dimensional matrix into diagonal matrix
 # c, r = arr.shape
 # for i in range(r):
 #     for j in range(i, c):
@@ -160,8 +160,8 @@ arr = np.squeeze(arr)
 
 num_clusters, indices = hierarchy_cluster(arr)
 
-data = whiten(arr)
-centroid=kmeans(data,max(cluster))[0]
+data = whiten(arr)                              # Normalize before running k-means
+centroid=kmeans(data,max(cluster))[0]           # k-means
 
 print("%d clusters" % num_clusters)
 for k, ind in enumerate(indices):
@@ -180,8 +180,8 @@ img_num_list = []
 for i in max_ind:
     img_list = natsorted(glob.glob(save_dir + '//' + '{}'.format(i) + '/*.jpg'))
     img_num = len(img_list)
-    if dx_b['{}'.format(i)] > 100 and dx_g['{}'.format(i)] > 100 and dx_r['{}'.format(i)] > 100:      # 防止切割错误导致文件数量过大被认为是最大数量文件夹
-        print('分割错误数量过大：{}'.format(i))
+    if dx_b['{}'.format(i)] > 100 and dx_g['{}'.format(i)] > 100 and dx_r['{}'.format(i)] > 100:      # Prevent the folder with excessive files caused by segmentation mistake to be considered as the folder with the maximum number of files
+        print('segmentation mistake：{}'.format(i))
     else:
         img_num_list.append(img_num)
         d_img_num['{}'.format(img_num)] = i
@@ -190,7 +190,7 @@ m = max(img_num_list)
 n = d_img_num['{}'.format(m)]
 print(n, m)
 
-# first_end = [0, o1]       # 单独计算首尾文件夹RGB均值
+# first_end = [0, o1]       # Separately calculate the RGB mean value of the first and last folder
 # for i in first_end:
 #     img_list = natsorted(glob.glob(save_dir + '//' + '{}'.format(i) + '/*.jpg'))
 #     img_num = len(img_list)
@@ -228,4 +228,3 @@ for time in time_list:
         path = save_dir + '//' + '{}'.format(time)
         shutil.rmtree(path)
 
-# 再优化的话我想到的办法就是转换成HSV颜色空间，先转换图像的空间，再计算均值比对，让一些恰巧在阈值内的图片与比赛图片区分开
