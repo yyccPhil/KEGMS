@@ -387,8 +387,8 @@ def generate_flow_data(path1, path2):
 ##########################################################
 if __name__ == '__main__':
 
-    base_dir = 'D:/py/data'
-    save_dir = 'D:/py/flo_data'
+    base_dir = '../data'
+    save_dir = '../flo_data'
 
     game_list = os.listdir(base_dir)
     for game in game_list:
