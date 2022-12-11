@@ -1,3 +1,5 @@
+# adjust
+
 """
 基于生成的光流图进行全局运动估计
 1. 计算4个角点
@@ -149,7 +151,7 @@ if __name__ == '__main__':
     #                 # savefig('D:/flow_multi_mode')
     #                 # img_data.append(img)
 
-    flow = 'E:/project/capstone/main/flow/flo/9/2.flo'
+    flow = '../main/flow/flo/9/2.flo'
     # fl.visualize_flow(fl2.read_flow(flow))
     # cv2.imshow(cv2.namedWindow("0"), cv2.imread(flow))
     global_motion, max_rad = global_motion_estimate(flow)

@@ -1,3 +1,5 @@
+# adjust
+
 # -*- coding: utf-8 -*-
 import os
 import cv2
@@ -141,12 +143,12 @@ class Hisogram(object):
 
 if __name__ == '__main__':
 
-    origin_dir = 'E:/project/capstone/data/origin_img'
-    base_dir = 'E:/project/capstone/data/data/key_data/key_global_3'
-    new_dir = 'E:/project/capstone/data/data/key_data/key_global_new'
-    key_dir = 'E:/project/capstone/data/data/key_data/key'
+    origin_dir = '../data/origin_img'
+    base_dir = '../data/key_data/key_global_3'
+    new_dir = '../data/key_data/key_global_new'
+    key_dir = '../data/key_data/key'
 
-    shutil.copytree(base_dir, 'E:/project/capstone/data/data/key_data/key_global')
+    shutil.copytree(base_dir, '../data/key_data/key_global')
 
     game_list = os.listdir(base_dir)
     for game in game_list:
@@ -317,4 +319,4 @@ if __name__ == '__main__':
                     shutil.copy(origin_path, key_path)
 
     shutil.rmtree(new_dir)
-    os.rename('E:/project/capstone/data/data/key_data/key_global', 'E:/project/capstone/data/data/key_data/key_global_3')
+    os.rename('../data/key_data/key_global', '../data/key_data/key_global_3')

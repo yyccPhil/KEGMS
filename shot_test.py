@@ -1,3 +1,5 @@
+# adjust
+
 import time
 import numpy as np
 import os
@@ -62,7 +64,7 @@ def get_cluster_indices(cluster_assignments):
 
 time_start = time.time()
 
-dir = 'E:/project/capstone/data/origin_img/test'
+dir = '../data/origin_img/test'
 save_dir = os.path.join(dir, 'hockey')     # 在这儿更改保存位置
 
 event_list = natsorted(os.listdir(save_dir))

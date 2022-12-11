@@ -1,3 +1,5 @@
+# adjust
+
 # -*- coding: utf-8 -*-
 import os
 import cv2
@@ -142,9 +144,9 @@ class Hisogram(object):
 
 if __name__ == '__main__':
 
-    origin_dir = 'E:/project/capstone/data/data_1/origin_img/nba'
+    origin_dir = '../data/data_1/origin_img/nba'
     # shutil.copytree(origin_dir, 'E:/project/capstone/data/test/nba')
-    base_dir = 'E:/project/capstone/data/test'
+    base_dir = '../data/test'
 
     time_start = time.time()
 

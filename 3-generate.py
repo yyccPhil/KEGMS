@@ -1,3 +1,5 @@
+# adjust
+
 """
 使用最小二乘拟合的方法对全局运动进行估计，通过不断迭代消除局部运动的干扰
 """
@@ -171,12 +173,12 @@ def global_motion_estimation(flo_data, w=490, h=360):
 
 if __name__ == '__main__':
 
-    base_dir = 'E:/project/capstone/data/data/flo_data/flo_nfl'            # 存放混合光流
-    global_pic_dir = 'E:/project/capstone/data/data/flo_img'     # 存放全局光流
+    base_dir = '../data/flo_data/flo_nfl'            # 存放混合光流
+    global_pic_dir = '../data/flo_img'     # 存放全局光流
 
-    key_global_dir = 'E:/project/capstone/data/data/key_data/key_global_dir'
-    save_dir = 'E:/project/capstone/data/data/key_data/key_global_3'
-    # key_global_middle_dir = './data/key_data/key_global_middle'
+    key_global_dir = '../data/key_data/key_global_dir'
+    save_dir = '../data/key_data/key_global_3'
+    # key_global_middle_dir = '../data/key_data/key_global_middle'
 
     game_list = os.listdir(base_dir)
     for game in game_list:
@@ -358,7 +360,7 @@ if __name__ == '__main__':
         os.rmdir(os.path.join(key_global_dir, game))  # 只能删除空目录
     os.rmdir(key_global_dir)
 
-    # base_dir = 'E:/project/data_cba/key_data/key_global_3'
+    # base_dir = '../key_data/key_global_3'
     #
     # m = 3
     #

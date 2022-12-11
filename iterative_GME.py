@@ -1,3 +1,5 @@
+# adjust
+
 """
 使用迭代优化的方法对全局运动进行估计，通过不断迭代消除局部运动的干扰
 code_v3: create on 2020/3/10 by Yang Zhou
@@ -195,8 +197,8 @@ def global_motion_estimation(flo_data, w=490, h=360):
 
 
 if __name__ == '__main__':
-    file_name = r'E:/project/capstone/main/final/data_2/flo_data_2/nba/nbaa/5/2792.npy'
-    # file_name = r'E:/project/capstone/main/final/data_1/flo_data/nba/nbaa/5/2792.npy'
+    file_name = r'../data_2/flo_data_2/nba/nbaa/5/2792.npy'
+    # file_name = r'../data_1/flo_data/nba/nbaa/5/2792.npy'
     print(file_name)
 
     data_org = np.load(file_name).astype(np.float32)
@@ -239,7 +241,7 @@ if __name__ == '__main__':
     # logo area suppress stage_2
     window = 10
     temporal_threshold = 2.0                    # 2.0
-    data_path = r'E:/project/capstone/main/shoudong_keyframe/keyframe_data/flo_data/nba/3-pointer-failure/5/'
+    data_path = r'../main/manually_keyframe/keyframe_data/flo_data/nba/3-pointer-failure/5/'
     data_list_stg2 = glob.glob(data_path + '/*.npy')[0: window]
     logo_mat = np.zeros((data_org.shape[0], data_org.shape[1]))
     for data_stg2_path in data_list_stg2:

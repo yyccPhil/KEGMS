@@ -1,9 +1,11 @@
+# adjust
+
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import pandas as pd  #导入pandas库
 
-df = pd.read_excel("E:/project/capstone/1.xlsx")
+df = pd.read_excel("../1.xlsx")
 Z = np.array(df)  #方法三
 xx = np.arange(3, 4.1, step=0.2)    # X轴的坐标
 yy = [0.2, 0.22, 0.24, 0.26, 0.28, 0.30, 0.32, 0.34, 0.36, 0.38, 0.40]         # Y轴的坐标

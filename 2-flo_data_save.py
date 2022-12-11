@@ -1,3 +1,5 @@
+# adjust
+
 """
 使用最小二乘拟合的方法对全局运动进行估计，通过不断迭代消除局部运动的干扰
 """
@@ -173,9 +175,9 @@ def global_motion_estimation(flo_data, w=490, h=360):
 
 if __name__ == '__main__':
 
-    base_dir = './data/origin_img'
-    save_dir = './data/flo_data'
-    global_pic_dir = './data/global_img'
+    base_dir = '../data/origin_img'
+    save_dir = '../data/flo_data'
+    global_pic_dir = '../data/global_img'
 
     game_list = os.listdir(base_dir)
     for game in game_list:

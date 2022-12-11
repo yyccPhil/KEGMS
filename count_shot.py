@@ -3,8 +3,7 @@ import glob
 from natsort import natsorted
 import shutil
 
-# base_dir = 'E:/project/capstone/data/origin_img/soccer'
-base_dir = 'E:/project/capstone/data/test/nba'
+base_dir = '../data/test/nba'
 
 sum = 0
 event_list = os.listdir(base_dir)

@@ -1,3 +1,5 @@
+# adjust
+
 # -*- coding: utf-8 -*-
 import os
 import cv2
@@ -150,12 +152,12 @@ class Hisogram(object):
 
 if __name__ == '__main__':
 
-    # origin_dir = 'E:/project/data/origin_img'
-    # base_dir = 'E:/project/data/key_data/key_global_3'
-    # new_dir = 'E:/project/data/key_data/key_global_new'
-    # key_dir = 'E:/project/data/key_data/key'
-    time = 'E:/project/capstone/data/13'
-    # time = 'E:/project/capstone/main/final/pytorch-pwc-final/data/key_data/nba/key_global/nba/30/27'
+    # origin_dir = '../data/origin_img'
+    # base_dir = '../data/key_data/key_global_3'
+    # new_dir = '../data/key_data/key_global_new'
+    # key_dir = '../data/key_data/key'
+    time = '../data/13'
+    # time = '../main/final/pytorch-pwc-final/data/key_data/nba/key_global/nba/30/27'
 
     img_list = natsorted(glob.glob(time + '/*.png'))
 

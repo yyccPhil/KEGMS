@@ -108,7 +108,7 @@ rows = 50
 a = int(h / cols) * int(w / rows)
 threshold = 0.15
 
-dir = 'E:/project/capstone/data/origin_img/test'
+dir = '../data/origin_img/test'
 os.makedirs(os.path.join(dir, 'nfl', str(o1)));     # video frame save path
 save_dir = os.path.join(dir, 'nfl')                 # video frame save path
 # delete_dir = os.path.join(dir, 'delete_test')

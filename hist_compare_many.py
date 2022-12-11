@@ -97,9 +97,8 @@ class Hisogram(object):
 
 if __name__ == '__main__':
 
-    # base_dir = 'D:/py/keyframe_data/global_pic'
-    base_dir = 'E:/project/capstone/data/data/key_data/key_global_3'
-    # save_path = 'D:/py/keyframe_data/'
+    base_dir = '../data/key_data/key_global_3'
+    # save_path = '../data/keyframe_data/'
 
     game_list = os.listdir(base_dir)
     for game in game_list:
@@ -166,7 +165,7 @@ if __name__ == '__main__':
                 print('Time cost = %fs' % (time_end - time_start))
 
             # print(img_count)
-            xls_save_path = os.path.join('E:/project/capstone/data/data/excel', game)
+            xls_save_path = os.path.join('../data/excel', game)
             isExists_2 = os.path.exists(xls_save_path)
             if not isExists_2:
                 os.makedirs(xls_save_path)
