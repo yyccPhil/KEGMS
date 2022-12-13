@@ -52,7 +52,7 @@ def hierarchy_cluster(data, method='average', threshold=35.0):
         threshold {float} -- the distance between the clusters
     Return:
         cluster_number int
-        cluster [[idx1, idx2,..], [idx3]]
+        cluster [[idx1, idx2,..], [idx3]] -- index of every cluster
     '''
     data = np.array(data)
 
