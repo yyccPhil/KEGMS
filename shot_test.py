@@ -1,5 +1,3 @@
-# adjust
-
 import time
 import numpy as np
 import os
@@ -11,19 +9,18 @@ import shutil
 from scipy.cluster.hierarchy import dendrogram, linkage, fcluster
 from matplotlib import pyplot as plt
 
-# 35
 def hierarchy_cluster(data, method='average', threshold=68.0):
-    '''层次聚类
+    '''Hierarchical Clustering
 
     Arguments:
-        data [[0, float, ...], [float, 0, ...]] -- 文档 i 和文档 j 的距离
+        data [[0, float, ...], [float, 0, ...]] -- the distance between i and j
 
     Keyword Arguments:
-        method {str} -- [linkage的方式： single、complete、average、centroid、median、ward] (default: {'average'})
-        threshold {float} -- 聚类簇之间的距离
+        method {str} -- [linkage methods: single、complete、average、centroid、median、ward] (default: {'average'})
+        threshold {float} -- the distance between the clusters
     Return:
-        cluster_number int -- 聚类个数
-        cluster [[idx1, idx2,..], [idx3]] -- 每一类下的索引
+        cluster_number int
+        cluster [[idx1, idx2,..], [idx3]] -- index of every cluster
     '''
     data = np.array(data)
 
@@ -35,9 +32,8 @@ def hierarchy_cluster(data, method='average', threshold=68.0):
 
     dendrogram(Z)
     plt.xlabel("serial number of global optical flow image   number of frame", fontsize=28)
-    # 设置y轴的文本，用于描述y轴代表的是什么
     plt.ylabel("distance sum of histograms", fontsize=28)
-    plt.title('Process of Hierarchical Clustering', fontsize=48)  # 设置图表标题
+    plt.title('Process of Hierarchical Clustering', fontsize=48)
     plt.tick_params(labelsize=8)
 
     plt.show()
@@ -46,13 +42,13 @@ def hierarchy_cluster(data, method='average', threshold=68.0):
 
 
 def get_cluster_indices(cluster_assignments):
-    '''映射每一类至原数据索引
+    '''Map each class to the original data index
 
     Arguments:
-        cluster_assignments 层次聚类后的结果
+        cluster_assignments -- the result after hierarchical clustering
 
     Returns:
-        [[idx1, idx2,..], [idx3]] -- 每一类下的索引
+        [[idx1, idx2,..], [idx3]] -- index of every cluster
     '''
     n = cluster_assignments.max()
     indices = []
@@ -65,7 +61,7 @@ def get_cluster_indices(cluster_assignments):
 time_start = time.time()
 
 dir = '../data/origin_img/test'
-save_dir = os.path.join(dir, 'hockey')     # 在这儿更改保存位置
+save_dir = os.path.join(dir, 'hockey')     # video frame save path
 
 event_list = natsorted(os.listdir(save_dir))
 o1 = int(os.path.basename(event_list[-1]))
@@ -108,7 +104,7 @@ for i in range(0, o1+1):
 arr = np.array(arr)
 arr = np.squeeze(arr)
 
-# 把二维矩阵变成对角矩阵
+# Convert two-dimensional matrix into diagonal matrix
 # c, r = arr.shape
 # for i in range(r):
 #     for j in range(i, c):
@@ -143,8 +139,8 @@ for i in max_ind[1]:
     print(type(i))
     print(i)
     img_num = len(img_list)
-    if dx_b['{}'.format(i)] > 100 and dx_g['{}'.format(i)] > 100 and dx_r['{}'.format(i)] > 100:      # 防止切割错误导致文件数量过大被认为是最大数量文件夹
-        print('分割错误数量过大：{}'.format(i))
+    if dx_b['{}'.format(i)] > 100 and dx_g['{}'.format(i)] > 100 and dx_r['{}'.format(i)] > 100:      # Prevent the folder with excessive files caused by segmentation mistake to be considered as the folder with the maximum number of files
+        print('segmentation mistake: {}'.format(i))
     else:
         img_num_list.append(img_num)
         d_img_num['{}'.format(img_num)] = i
@@ -153,7 +149,7 @@ m = max(img_num_list)
 n = d_img_num['{}'.format(m)]
 print(n, m)
 
-# first_end = [0, o1]       # 单独计算首尾文件夹RGB均值
+# first_end = [0, o1]       # Separately calculate the RGB mean value of the first and last folder
 # for i in first_end:
 #     img_list = natsorted(glob.glob(save_dir + '//' + '{}'.format(i) + '/*.jpg'))
 #     img_num = len(img_list)

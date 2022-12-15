@@ -16,7 +16,7 @@ def hierarchy_cluster(data, method='average', threshold=90000.0):
         data [[0, float, ...], [float, 0, ...]] -- the distance between i and j
 
     Keyword Arguments:
-        method {str} -- [linkage methods： single、complete、average、centroid、median、ward] (default: {'average'})
+        method {str} -- [linkage methods: single、complete、average、centroid、median、ward] (default: {'average'})
         threshold {float} -- the distance between the clusters
     Return:
         cluster_number int

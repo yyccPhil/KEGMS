@@ -181,7 +181,7 @@ for i in max_ind:
     img_list = natsorted(glob.glob(save_dir + '//' + '{}'.format(i) + '/*.jpg'))
     img_num = len(img_list)
     if dx_b['{}'.format(i)] > 100 and dx_g['{}'.format(i)] > 100 and dx_r['{}'.format(i)] > 100:      # Prevent the folder with excessive files caused by segmentation mistake to be considered as the folder with the maximum number of files
-        print('segmentation mistake：{}'.format(i))
+        print('segmentation mistake: {}'.format(i))
     else:
         img_num_list.append(img_num)
         d_img_num['{}'.format(img_num)] = i
