@@ -1,5 +1,3 @@
-# adjust
-
 # -*- coding: utf-8 -*-
 import os
 import cv2
@@ -13,17 +11,17 @@ import time
 
 
 def hierarchy_cluster(data, method='average', threshold=6000.0):
-    '''层次聚类
+    '''Hierarchical Clustering
 
     Arguments:
-        data [[0, float, ...], [float, 0, ...]] -- 文档 i 和文档 j 的距离
+        data [[0, float, ...], [float, 0, ...]] -- the distance between i and j
 
     Keyword Arguments:
-        method {str} -- [linkage的方式： single、complete、average、centroid、median、ward] (default: {'average'})
-        threshold {float} -- 聚类簇之间的距离
+        method {str} -- [linkage methods： single、complete、average、centroid、median、ward] (default: {'average'})
+        threshold {float} -- the distance between the clusters
     Return:
-        cluster_number int -- 聚类个数
-        cluster [[idx1, idx2,..], [idx3]] -- 每一类下的索引
+        cluster_number int
+        cluster [[idx1, idx2,..], [idx3]] -- index of every cluster
     '''
     data = np.array(data)
 
@@ -37,13 +35,13 @@ def hierarchy_cluster(data, method='average', threshold=6000.0):
 
 
 def get_cluster_indices(cluster_assignments):
-    '''映射每一类至原数据索引
+    '''Map each class to the original data index
 
     Arguments:
-        cluster_assignments 层次聚类后的结果
+        cluster_assignments -- the result after hierarchical clustering
 
     Returns:
-        [[idx1, idx2,..], [idx3]] -- 每一类下的索引
+        [[idx1, idx2,..], [idx3]] -- index of every cluster
     '''
     n = cluster_assignments.max()
     indices = []
@@ -57,7 +55,7 @@ def rgb2hsi(img_rgb):
     rows = int(img_rgb.shape[0])
     cols = int(img_rgb.shape[1])
     B, G, R = cv2.split(img_rgb)
-    # 归一化到[0,1]
+    # Normalize to [0,1]
     B = B / 255.0
     G = G / 255.0
     R = R / 255.0
@@ -88,12 +86,12 @@ def rgb2hsi(img_rgb):
 
             # H = H * 360
 
-            # 为了便于理解，常常对结果做扩充，即 [0°，360°],[0,100],[0,255]
+            # For ease of understanding, the results are often extended, that is, [0°, 360°], [0,100], [0,255]
             img_hsi[i, j, 0] = H * 360
             img_hsi[i, j, 1] = S * 100
             img_hsi[i, j, 2] = I * 255
 
-            # 或者为了便于计算直方图，都扩充为0~255（同RGB）
+            # Or in order to facilitate the calculation of the histogram, expanded to 0~255 (same as RGB)
             # img_hsi[i, j, 0] = H * 255
             # img_hsi[i, j, 1] = S * 255
             # img_hsi[i, j, 2] = I * 255
@@ -103,10 +101,10 @@ def rgb2hsi(img_rgb):
 class Hisogram(object):
     # def create_rgb_hist(self, image, color_type=1):
     #     """
-    #     获取彩色空间直方图
+    #     Get color space histogram
     #     """
     #     h, w, c = image.shape
-    #     rgHist = np.zeros([16 * 16 * 16, 1], np.float32)  # 必须是float型
+    #     rgHist = np.zeros([16 * 16 * 16, 1], np.float32)  # must be float type
     #     print(rgHist)
     #     hsize = 256 / 16
     #     for row in range(0, h, 1):
@@ -121,7 +119,7 @@ class Hisogram(object):
 
     def hist_compare(self, hist1, hist2):
         """
-        比较两个直方图
+        compare two histograms
         """
         # hist1 = self.create_rgb_hist(image1)
         # hist2 = self.create_rgb_hist(image2)
@@ -129,7 +127,7 @@ class Hisogram(object):
         match2 = cv2.compareHist(hist1, hist2, cv2.HISTCMP_CORREL)
         match3 = cv2.compareHist(hist1, hist2, cv2.HISTCMP_CHISQR)
         match4 = cv2.compareHist(hist1, hist2, cv2.HISTCMP_INTERSECT)
-        # print("巴氏距离：%20s,   相关性：%20s,   卡方：%s,  HISTCMP_INTERSECT：%s " % (match1, match2, match3, match4))
+        # print("Bhattacharyya distance：%20s,  Correlation：%20s,  Chi-square：%s,   HISTCMP_INTERSECT：%s " % (match1, match2, match3, match4))
 
         return match1, match2, match3, match4
 
@@ -137,8 +135,8 @@ class Hisogram(object):
     # def hist_image(self, image):
     #     color = ("Hue", "Saturity", "Intensity")
     #     for i, color in enumerate(color):
-    #         hist = cv2.calcHist([image], [i], None, [256], [0, 256])  # 计算rgb的直方图
-    #     #            hist = cv.calcHist([image], [0,1], None, [180,256], [0,180,0,256])  #计算H-S直方图
+    #         hist = cv2.calcHist([image], [i], None, [256], [0, 256])  # Calculate the histogram of RGB
+    #     #            hist = cv.calcHist([image], [0,1], None, [180,256], [0,180,0,256])  # Calculate the histogram of H-S
     #     print(hist)
 
 
@@ -171,7 +169,7 @@ if __name__ == '__main__':
                 arr = np.array(arr)
                 arr = np.squeeze(arr)
 
-                # 把二维矩阵变成对角矩阵
+                # Convert two-dimensional matrix into diagonal matrix
                 # c, r = arr.shape
                 # for i in range(r):
                 #     for j in range(i, c):

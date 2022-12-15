@@ -103,7 +103,7 @@ class Hisogram(object):
     #     Get color space histogram
     #     """
     #     h, w, c = image.shape
-    #     rgHist = np.zeros([16 * 16 * 16, 1], np.float32)  # 必须是float型
+    #     rgHist = np.zeros([16 * 16 * 16, 1], np.float32)  # must be float type
     #     print(rgHist)
     #     hsize = 256 / 16
     #     for row in range(0, h, 1):
