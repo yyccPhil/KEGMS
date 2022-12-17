@@ -103,7 +103,7 @@ class Hisogram(object):
     #     Get color space histogram
     #     """
     #     h, w, c = image.shape
-    #     rgHist = np.zeros([16 * 16 * 16, 1], np.float32)  # must be float type
+    #     rgHist = np.zeros([16 * 16 * 16, 1], np.float32)  # Must be float type
     #     print(rgHist)
     #     hsize = 256 / 16
     #     for row in range(0, h, 1):
@@ -118,7 +118,7 @@ class Hisogram(object):
 
     def hist_compare(self, hist1, hist2):
         """
-        compare two histograms
+        Compare two histograms
         """
         # hist1 = self.create_rgb_hist(image1)
         # hist2 = self.create_rgb_hist(image2)
