@@ -1,7 +1,5 @@
-# adjust
-
 """
-使用最小二乘拟合的方法对全局运动进行估计，通过不断迭代消除局部运动的干扰
+Use the least squares fitting method to estimate the global motion, and eliminate the interference of local motion through continuous iteration
 """
 
 from lib import flowlib_v2 as fl2
@@ -65,12 +63,12 @@ def param_estimate_x(flo_data, index_list, outlier_mat, iteration, thres):
     x_mat = None
     thres_auto = 0.0
     for iter in range(iteration):
-        # x_axis_list 里面存的是所有点的x坐标值
-        # data 里面存的是每个点对应的运动位移值，已归一化到了[0, 255]
+        # x_axis_list (x-coordinate values of all points)
+        # data (the motion value corresponding to each point, which has been normalized to [0, 255])
         x_axis_list = [i[1] for i in index_list if i not in outline_index_list]
         data = [flo_data[i[0], i[1], 0] for i in index_list if i not in outline_index_list]
 
-        # fita_avg 里面是拟合出来的参数值
+        # fita_avg (the fitted parameter values)
         fita_avg = LeastSquareFit(data, x_axis_list)
 
         data_new = np.arange(0, len(flo_data[0]))
@@ -83,7 +81,7 @@ def param_estimate_x(flo_data, index_list, outlier_mat, iteration, thres):
         x_mat = np.repeat(data_com, flo_data.shape[0], axis=0)
         m_diff = np.abs(flo_data[:, :, 0] - x_mat)
 
-        # mask 是一个和原始光流场大小一样的矩阵，里面值是true和false。用来指明哪些是异常点
+        # mask (a matrix with the same size as the original optical flow field, and all of the values are true or false. Used to indicate which are outliers)
         mask = np.where(m_diff > thres_auto, True, False)
 
         outlier_mat = outlier_mat | mask
@@ -101,12 +99,12 @@ def param_estimate_y(flo_data, index_list, outlier_mat, iteration, thres):
     y_mat = None
     thres_auto = 0.0
     for iter in range(iteration):
-        # y_axis_list 里面存的是所有点的y坐标值
-        # data 里面存的是每个点对应的运动位移值，已归一化到了[0, 255]
+        # y_axis_list
+        # data
         y_axis_list = [i[0] for i in index_list if i not in outline_index_list]
         data = [flo_data[i[0], i[1], 1] for i in index_list if i not in outline_index_list]
 
-        # fita_avg 里面是拟合出来的参数值
+        # fita_avg
         fita_avg = LeastSquareFit(data, y_axis_list)
 
         data_new = np.arange(0, len(flo_data))
@@ -121,7 +119,7 @@ def param_estimate_y(flo_data, index_list, outlier_mat, iteration, thres):
 
         m_diff = np.abs(flo_data[:, :, 1] - y_mat)
 
-        # mask 是一个和原始光流场大小一样的矩阵，里面值是true和false。用来指明哪些是异常点
+        # mask
         mask = np.where(m_diff > thres_auto, True, False)
         outlier_mat = outlier_mat | mask
         outline_index_list = np.argwhere(outlier_mat).tolist()
@@ -145,7 +143,7 @@ def global_motion_estimation(flo_data, w=490, h=360):
 
     u = flo_data[:, :, 0]
     v = flo_data[:, :, 1]
-    rad = np.sqrt(u ** 2 + v ** 2)  # 光流场方向
+    rad = np.sqrt(u ** 2 + v ** 2)  # the direction of optical flow field
     maxrad = max(-1, np.max(rad))
 
     flo_data = np.clip(flo_data, -displace, displace)
@@ -186,19 +184,19 @@ if __name__ == '__main__':
             print(event)
             real_list = natsorted(glob.glob(os.path.join(base_dir, game, event) + '/*.jpg'))
 
-            # 镜头分割有误差，补帧用
+            # used for frame supplementary (may be mistakes in the shot segmentation)
             first_filename = os.path.basename(real_list[0])
             flo_count = int(first_filename.replace(".jpg", "")) + 1
             last_filename = os.path.basename(real_list[-1])
-            last_count = int(last_filename.replace(".jpg", ""))  # 记录最后一个图片的帧号
-            end = last_count - flo_count + 1  # 这儿加一是因为算flo_count时候加1了。。
+            last_count = int(last_filename.replace(".jpg", ""))  # record the number of the last frame
+            end = last_count - flo_count + 1  # because flo_count + 1
 
             for index in range(0, end, 1):
 
                 img1_path = real_list[index]
                 img2_path = real_list[index + 1]
 
-                # 镜头分割有误差，补帧用
+                 # used for frame supplementary
                 test_path = os.path.join(base_dir, game, event)
                 test_count = int(os.path.basename(img2_path).replace(".jpg", ""))
                 test_index = index
@@ -207,7 +205,7 @@ if __name__ == '__main__':
                     shutil.copyfile(img2_path, test_path + '/{}.jpg'.format(test_pic))
                     real_list.insert(test_index + 1, test_path + '/{}.jpg'.format(test_pic))
                     img2_path = real_list[test_index + 1]
-                    print('缺帧：%d' % test_pic)
+                    print('lost frame: %d' % test_pic)
                     test_count = int(os.path.basename(img2_path).replace(".jpg", ""))
                     test_index += 1
                     test_pic += 1
@@ -250,8 +248,7 @@ if __name__ == '__main__':
                 resize_h = 24
 
                 data = cv2.resize(data_org, dsize=(resize_w, resize_h), interpolation=cv2.INTER_LINEAR)
-                global_motion, maxrad, outlier_set , thres, thres_auto_x, thres_auto_y = global_motion_estimation(data, w=data_org.shape[1],
-                                                                              h=data_org.shape[0])
+                global_motion, maxrad, outlier_set , thres, thres_auto_x, thres_auto_y = global_motion_estimation(data, w=data_org.shape[1], h=data_org.shape[0])
 
                 x_global_motion = global_motion[0:1, :, 0]
                 y_global_motion = global_motion[:, 0:1, 1]
@@ -265,9 +262,9 @@ if __name__ == '__main__':
                 x3 = math.sqrt(x1 * x1 + y1 * y1)
                 y3 = math.sqrt(x2 * x2 + y2 * y2)
 
-                print("缩放量为：(%f, %f)" % (x1, y1))
-                print("平移量为：(%f, %f)" % (x2, y2))
-                print("合缩放、平移量：(%f, %f)" % (x3, y3), '\n')
+                print("zooming vector: (%f, %f)" % (x1, y1))
+                print("translation vector: (%f, %f)" % (x2, y2))
+                print("resultant zooming magnitude, resultant translation distance: (%f, %f)" % (x3, y3), '\n')
 
                 # local_motion = data_org - global_motion
                 #
@@ -283,6 +280,5 @@ if __name__ == '__main__':
                 # flo_local_color = fl2.flow_to_image(local_motion, maxrad)
                 # img_out = Image.fromarray(flo_local_color)
                 # img_out.save(save_path + '/local_{}.png'.format(flo_count))
-                # 可以再加上判断是否count+1（就是有没有跑完第一个，不然没法和前面比），把直方图测巴氏距离也能加进去
 
                 save_count += 1
