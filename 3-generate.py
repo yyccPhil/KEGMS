@@ -1,7 +1,5 @@
-# adjust
-
 """
-使用最小二乘拟合的方法对全局运动进行估计，通过不断迭代消除局部运动的干扰
+Use the least squares fitting method to estimate the global motion, and eliminate the interference of local motion through continuous iteration
 """
 
 import numpy as np
@@ -63,12 +61,12 @@ def param_estimate_x(flo_data, index_list, outlier_mat, iteration, thres):
     x_mat = None
     thres_auto = 0.0
     for iter in range(iteration):
-        # x_axis_list 里面存的是所有点的x坐标值
-        # data 里面存的是每个点对应的运动位移值，已归一化到了[0, 255]
+        # x_axis_list (x-coordinate values of all points)
+        # data (the motion value corresponding to each point, which has been normalized to [0, 255])
         x_axis_list = [i[1] for i in index_list if i not in outline_index_list]
         data = [flo_data[i[0], i[1], 0] for i in index_list if i not in outline_index_list]
 
-        # fita_avg 里面是拟合出来的参数值
+        # fita_avg (the fitted parameter values)
         fita_avg = LeastSquareFit(data, x_axis_list)
 
         data_new = np.arange(0, len(flo_data[0]))
@@ -81,7 +79,7 @@ def param_estimate_x(flo_data, index_list, outlier_mat, iteration, thres):
         x_mat = np.repeat(data_com, flo_data.shape[0], axis=0)
         m_diff = np.abs(flo_data[:, :, 0] - x_mat)
 
-        # mask 是一个和原始光流场大小一样的矩阵，里面值是true和false。用来指明哪些是异常点
+        # mask (a matrix with the same size as the original optical flow field, and all of the values are true or false. Used to indicate which are outliers)
         mask = np.where(m_diff > thres_auto, True, False)
 
         outlier_mat = outlier_mat | mask
@@ -99,12 +97,12 @@ def param_estimate_y(flo_data, index_list, outlier_mat, iteration, thres):
     y_mat = None
     thres_auto = 0.0
     for iter in range(iteration):
-        # y_axis_list 里面存的是所有点的y坐标值
-        # data 里面存的是每个点对应的运动位移值，已归一化到了[0, 255]
+        # y_axis_list
+        # data
         y_axis_list = [i[0] for i in index_list if i not in outline_index_list]
         data = [flo_data[i[0], i[1], 1] for i in index_list if i not in outline_index_list]
 
-        # fita_avg 里面是拟合出来的参数值
+        # fita_avg
         fita_avg = LeastSquareFit(data, y_axis_list)
 
         data_new = np.arange(0, len(flo_data))
@@ -119,7 +117,7 @@ def param_estimate_y(flo_data, index_list, outlier_mat, iteration, thres):
 
         m_diff = np.abs(flo_data[:, :, 1] - y_mat)
 
-        # mask 是一个和原始光流场大小一样的矩阵，里面值是true和false。用来指明哪些是异常点
+        # mask
         mask = np.where(m_diff > thres_auto, True, False)
         outlier_mat = outlier_mat | mask
         outline_index_list = np.argwhere(outlier_mat).tolist()
@@ -143,7 +141,7 @@ def global_motion_estimation(flo_data, w=490, h=360):
 
     u = flo_data[:, :, 0]
     v = flo_data[:, :, 1]
-    rad = np.sqrt(u ** 2 + v ** 2)  # 光流场方向
+    rad = np.sqrt(u ** 2 + v ** 2)  # the direction of optical flow field
     maxrad = max(-1, np.max(rad))
 
     flo_data = np.clip(flo_data, -displace, displace)
@@ -173,8 +171,8 @@ def global_motion_estimation(flo_data, w=490, h=360):
 
 if __name__ == '__main__':
 
-    base_dir = '../data/flo_data/flo_nfl'            # 存放混合光流
-    global_pic_dir = '../data/flo_img'     # 存放全局光流
+    base_dir = '../data/flo_data/flo_nfl'       # "mixed" optical flow
+    global_pic_dir = '../data/flo_img'          # global optical flow
 
     key_global_dir = '../data/key_data/key_global_dir'
     save_dir = '../data/key_data/key_global_3'
@@ -183,7 +181,7 @@ if __name__ == '__main__':
     game_list = os.listdir(base_dir)
     for game in game_list:
         pic_list = natsorted(os.listdir(os.path.join(base_dir, game)))
-        time_start = time.time()  # 计时开始
+        time_start = time.time()  # Timing begins
         for pic in pic_list:
             print(pic)
             flo_list = natsorted(glob.glob(os.path.join(base_dir, game, pic) + '/*.npy'))
@@ -192,10 +190,10 @@ if __name__ == '__main__':
 
             d_x = {}
             d_y = {}
-            d_x2 = {}       # 用来找抢断帧的
+            d_x2 = {}       # Used to extract "steal" frames
 
-            first_count = int(os.path.basename(flo_list[0]).replace(".npy", "")) + 1    # 用于底下取极小值用的
-            last_count = int(os.path.basename(flo_list[-1]).replace(".npy", ""))  # 记录最后一个图片的帧号
+            first_count = int(os.path.basename(flo_list[0]).replace(".npy", "")) + 1    # used to take the local minimum value
+            last_count = int(os.path.basename(flo_list[-1]).replace(".npy", ""))  # the frame number of the last picture
 
             save_count = 1
 
@@ -222,8 +220,8 @@ if __name__ == '__main__':
                 y1 = (y_global_motion[-1, 0] - y_global_motion[0, 0]) / 2
                 y2 = y_global_motion[-1, 0] - y1
 
-                # print("缩放量为：(%f, %f)" % (x1, y1))
-                # print("平移量为：(%f, %f)" % (x2, y2))
+                # print("zooming vector: (%f, %f)" % (x1, y1))
+                # print("translation vector: (%f, %f)" % (x2, y2))
 
                 if (x1 * y1) <= 0:
                     a = 0
@@ -244,7 +242,7 @@ if __name__ == '__main__':
             time_end = time.time()
             print('Time cost = %f s , %f' % (time_end - time_start, save_count))
             print(first_count, last_count)
-            print('开始提取')
+            print('Extraction begins')
 
             key_global_path = os.path.join(key_global_dir, game, pic)
             isExists_global = os.path.exists(key_global_path)
@@ -253,7 +251,8 @@ if __name__ == '__main__':
 
             global_img_list = natsorted(glob.glob(os.path.join(global_pic_dir, game, pic) + '/*.png'))
 
-            path_first = global_img_list[0]     # 首末帧提取，相当于在镜头分割后就首末帧提取，针对文件夹内图片为1的情况
+            # Extract the first and last frames, which is equivalent to extracting the first and last frames after the shots are segmented, where there is only 1 picture in the folder
+            path_first = global_img_list[0]
             shutil.copy(path_first, key_global_path)
 
             path_last = global_img_list[-1]
@@ -290,7 +289,7 @@ if __name__ == '__main__':
                     key0 = extre_list[extre_count - 2]
                     key1 = extre_list[extre_count - 1]
                     del_key = key1 - key0
-                    if del_key >= delta_middle:  # 前后关键帧差多少时，补关键帧
+                    if del_key >= delta_middle:  # When the difference between the numbers of the front and back keyframes is >= delta_middle, supplement frame
                         path_del_1 = os.path.join(global_pic_dir, game, pic) + '/global_{}.png'.format(
                             key0 + del_key // 2 + 1)
                         shutil.copy(path_del_1, key_global_path)
@@ -300,7 +299,7 @@ if __name__ == '__main__':
 
             extre_list.append(last_count)
             del_key = extre_list[-1] - extre_list[-2]
-            if del_key >= delta_middle:  # 前后关键帧差多少时，补关键帧
+            if del_key >= delta_middle:  # >= delta_middle, supplement frame
                 path_del_1 = os.path.join(global_pic_dir, game, pic) + '/global_{}.png'.format(
                     extre_list[-2] + del_key // 2 + 1)
                 shutil.copy(path_del_1, key_global_path)
@@ -312,7 +311,7 @@ if __name__ == '__main__':
             img_num = len(img_list)
             end = img_num - 1
 
-            save_count = 0  # 文件夹号
+            save_count = 0  # folder number
             key_list = [0]
 
             for index in range(0, end, 1):
@@ -337,27 +336,27 @@ if __name__ == '__main__':
 
                     for i in range(key_list[save_count], key_list[save_count + 1] + 1):
                         path = img_list[i]
-                        shutil.move(path, save_path)  # 一会儿换成移动
+                        shutil.move(path, save_path)
 
                     del key_list[-1]
                     key_list.append(index + 1)
                     save_count += 1
 
-                if index == end - 1:  # 测试完成后改成文件移除的，不用复制的，这样在这儿只判断一下文件夹里还是不是剩一张图就行了。并且再把这个空文件夹给删掉
+                if index == end - 1:
                     path_new = os.path.join(key_global_dir, game,
-                                            '{}_'.format(save_count))  # 这儿加个‘_’是为了防止正好分隔的数和原始的time重合了，那样就没法重命名了
-                    os.rename(os.path.join(key_global_dir, game, pic), path_new)  # 重命名，然后移过去
+                                            '{}_'.format(save_count))
+                    os.rename(os.path.join(key_global_dir, game, pic), path_new)
                     shutil.move(path_new, os.path.join(save_dir, game, pic))
 
-            if save_count == 0:                     # 防止文件夹内的图片真的没有出现反向的情况
+            if save_count == 0:
                 mis_list = natsorted(glob.glob(os.path.join(save_dir, game, pic) + '/*.png'))
                 mis_path = os.path.join(save_dir, game, pic, '0')
                 os.makedirs(mis_path)
                 for i in mis_list:
                     shutil.move(i, mis_path)
-                print('这里面根本就没分？！:{}'.format(pic))
+                print('unsegmented folder: {}'.format(pic))
 
-        os.rmdir(os.path.join(key_global_dir, game))  # 只能删除空目录
+        os.rmdir(os.path.join(key_global_dir, game))  # can only remove empty directories
     os.rmdir(key_global_dir)
 
     # base_dir = '../key_data/key_global_3'
