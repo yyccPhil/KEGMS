@@ -1,11 +1,9 @@
-# adjust
-
 """
-基于生成的光流图进行全局运动估计
-1. 计算4个角点
-2. 基于角点值近似整个光流场
-3. 每一行的y方向幅值相同
-4. 每一列的x方向幅值相同
+Global Motion Estimation Based on Generated Optical Flow
+1. Calculate 4 corner points
+2. Approximate the entire optical flow field based on the corner values
+3. The y-direction amplitude of each row is the same
+4. The x-direction amplitude of each column is the same
 """
 from lib import flowlib as fl
 from lib import flowlib_v2 as fl2
@@ -38,48 +36,46 @@ def global_motion_estimate(flow_path, visualize_flow=False):
         fl.visualize_flow(flow)
 
     max_rad = fl2.compute_maxrad(flow)
-    # # 每一列的均值
+    # # the mean of each column
     # horizen_mean = np.mean(flow[5:-5, 5:-5, 0], axis=0)
-    # # 每一行的均值
+    # # the mean of each row
     # vertical_mean = np.mean(flow[2:-2, 2:-2, 1], axis=1)
 
-    # # 第一列
     # first_column = flow[5:-5, 5:6, 0]
     # m = outlier_filter(first_column)
-    # # 最后一列
     # last_column = flow[5:-5, -6:-5, 0]
 
-    # # 第一列的均值
+    # # the mean of first column
     # x1 = horizen_mean[0]
-    # # 最后一列的均值
+    # # the mean of last column
     # x2 = horizen_mean[-1]
-    # # 最后一列的均值
+    # # the mean of last column
     # y1 = vertical_mean[0]
-    # # 最后一列的均值
+    # # the mean of last column
     # y2 = vertical_mean[-1]
 
-    # 第一列的均值
+    # the mean of first column
     x1 = float(outlier_filter(flow[5:-5, 5:6, 0]))
-    # 最后一列的均值
+    # the mean of last column
     x2 = float(outlier_filter(flow[5:-5, -6:-5, 0]))
-    # 第一行的均值
+    # the mean of first row
     y1 = float(outlier_filter(flow[5:6, 5:-5, 1]))
-    # 最后一行的均值
+    # the mean of last row
     y2 = float(outlier_filter(flow[-6:-5, 5:-5, 1]))
 
-    # 初始化一个和光流图一样size的空矩阵
+    # Initialize an empty matrix of the same size as the optical flow
     flow_global = np.zeros((flow.shape[0], flow.shape[1], 2))
 
-    # 基于x1~xw 线性插值生成一行
+    # Generate a line based on x1~xw linear interpolation
     x_direction = np.linspace(x1, x2, flow.shape[1]).reshape(1, -1)
     # x_direction = np.arange(x1, x2, (x2 - x1) / flow.shape[1]).reshape(1, -1)[:, 0:flow.shape[1]]
-    # 基于y1~yh 线性插值生成一列
+    # Generate a column based on y1~yh linear interpolation
     # y_direction = np.arange(y1, y2, (y2 - y1) / flow.shape[0]).reshape(-1, 1)[0:flow.shape[0], :]
     y_direction = np.linspace(y1, y2, flow.shape[0]).reshape(-1, 1)
 
-    # x方向幅值行向量纵向复制h次
+    # Vertically copy the magnitude row vector in the x direction h times
     x_mat = np.repeat(x_direction, flow.shape[0], axis=0)
-    # y方向幅值列向量横向复制w次
+    # Horizontally copy the y-direction amplitude column vector w times
     y_mat = np.repeat(y_direction, flow.shape[1], axis=1)
     flow_global[:, :, 0] = x_mat
     flow_global[:, :, 1] = y_mat
@@ -137,8 +133,8 @@ if __name__ == '__main__':
     #                 y1 = (y_global_motion[-1, 0] - y_global_motion[0, 0]) / 2
     #                 y2 = y_global_motion[-1, 0] - y1
     #
-    #                 print("缩放量为：(%f, %f)" % (x1, y1))
-    #                 print("平移量为：(%f, %f)" % (x2, y2), '\n')
+    #                 print("zooming vector: (%f, %f)" % (x1, y1))
+    #                 print("translation vector: (%f, %f)" % (x2, y2), '\n')
     #
     #
     #                 img = color_coding(global_motion, max_rad)
@@ -167,6 +163,6 @@ if __name__ == '__main__':
     y1 = (y_global_motion[-1, 0] - y_global_motion[0, 0]) / 2
     y2 = y_global_motion[-1, 0] - y1
 
-    print("缩放量为：(%f, %f)" % (x1, y1))
-    print("平移量为：(%f, %f)" % (x2, y2), '\n')
+    print("zooming vector: (%f, %f)" % (x1, y1))
+    print("translation vector: (%f, %f)" % (x2, y2), '\n')
 
