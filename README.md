@@ -1,9 +1,10 @@
 # Key frame extraction based on global motion statistics for team-sport videos
 In this study, a global motion statistics-based key frame extraction scheme (KEGMS) [1] is proposed. The introduction of global motion results in fine-grained video partition and extracts the effective features for key frame extraction. A dataset called SportKF is built, which includes 25 videos of 197,878 frames in 112 min and 764 key frames from four types of sports (basketball, football, American football and field hockey). The experimental results demonstrate that the proposed scheme achieves state-of-the-art performance by introducing global motion statistics.
-
+<br />
 Considering the trade-off between speed and performance, we adopt the off-the-shelf PWC-Net [2] to estimate optical flow herein. This part of the code refers to a personal reimplementation [3] of PWC-Net using PyTorch. Should you be making use of this work, please cite PWC-Net accordingly. Also, make sure to adhere to the <a href="https://github.com/NVlabs/PWC-Net#license">licensing terms</a> of the authors.
 
 Here is the poster I used when participating in ChinaMM 2020, after a little modification:
+
 <a href="https://doi.org/10.1007/s00530-021-00777-7" rel="Paper"><img src="poster_ChinaMM2020.png?raw=true" alt="Paper" width="100%"></a>
 
 For the related patent of this work, please see:
