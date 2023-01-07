@@ -7,24 +7,24 @@ Here is the poster I used when participating in ChinaMM 2020, after a little mod
 
 <a href="https://doi.org/10.1007/s00530-021-00777-7" rel="Paper"><img src="poster_ChinaMM2020.png?raw=true" alt="Paper" width="100%"></a>
 
-For the related patent of this work, please see:
+For the related patents of this work, please see:
 <br />
 <a href="https://patents.google.com/patent/CN113032631A/en?oq=CN113032631A">Team sports video key frame extraction method based on global motion statistical characteristics</a>
 <br />
 <a href="https://patents.google.com/patent/CN113033308A/en?oq=CN113033308A">Team sports video game lens extraction method based on color features</a> (In the paper, I used "shot" as a video sequence photographed continuously by one camera, so the "lens" showed in the title of this patent may have been mistranslated.)
 
-## background
+## Background
 Key frame extraction is an important manner of video summarization. It can be used to interpret video content quickly. Existing approaches first partition the entire video into video clips by shot boundary detection, and then, extract key frames by frame clustering. However, in most team-sport videos, a video clip usually includes many events, and it is difficult to extract the key frames related to all of these events accurately, because different events of a game shot can have features of similar appearance. As is well known, most events in team-sport videos are attack and defense conversions, which are related to global translation. Therefore, by using fine-grained partition based on the global motion, a shot could be further partitioned into more video clips, from which more key frames could be extracted and they are related to the events.
 
 In this study, global horizontal motion is introduced to further partition video clips into fine-grained video clips. Furthermore, global motion statistics are utilized to extract candidate key frames. Finally, the representative key frames are extracted based on the spatial–temporal consistence and hierarchical clustering, and the redundant frames are removed.
 
-## Video Summary Extraction System (demo)
+## Video summary extraction system (demo)
 https://user-images.githubusercontent.com/112043923/205419245-7f6cc5e1-1f20-4d95-bb21-45a719ce6a70.mp4
 
-## license
+## License
 As stated in the <a href="https://github.com/NVlabs/PWC-Net#license">licensing terms</a> of the authors of the paper, the models are free for non-commercial share-alike purpose. Please make sure to further consult their licensing terms.
 
-## references
+## References
 ```
 [1]  @article{yuan2022key,
          title={Key frame extraction based on global motion statistics for team-sport videos},
