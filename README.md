@@ -1,12 +1,9 @@
 # Key frame extraction based on global motion statistics for team-sport videos
-This is a personal reimplementation of PWC-Net [1] using PyTorch. Should you be making use of this work, please cite the paper accordingly. Also, make sure to adhere to the <a href="https://github.com/NVlabs/PWC-Net#license">licensing terms</a> of the authors. Should you be making use of this particular implementation, please acknowledge it appropriately [2].
-
+In this study, a global motion statistics-based key frame extraction scheme (KEGMS) [1] is proposed. The introduction of global motion results in fine-grained video partition and extracts the effective features for key frame extraction. A dataset called SportKF is built, which includes 25 videos of 197,878 frames in 112 min and 764 key frames from four types of sports (basketball, football, American football and field hockey). The experimental results demonstrate that the proposed scheme achieves state-of-the-art performance by introducing global motion statistics.
+Considering the trade-off between speed and performance, we adopt the off-the-shelf PWC-Net [2] to estimate optical flow herein. This part of the code refers to a personal reimplementation [3] of PWC-Net using PyTorch. Should you be making use of this work, please cite PWC-Net accordingly. Also, make sure to adhere to the <a href="https://github.com/NVlabs/PWC-Net#license">licensing terms</a> of the authors.
+Here is the poster I used when participating in ChinaMM 2020, after a little modification:
 <a href="https://doi.org/10.1007/s00530-021-00777-7" rel="Paper"><img src="poster_ChinaMM2020.png?raw=true" alt="Paper" width="100%"></a>
 
-For the original version of this work, please see: https://github.com/NVlabs/PWC-Net
-<br />
-Another optical flow implementation from me: https://github.com/sniklaus/pytorch-pwc
-<br />
 For the related patent of this work, please see:
 <br />
 <a href="https://patents.google.com/patent/CN113032631A/en?oq=CN113032631A">Team sports video key frame extraction method based on global motion statistical characteristics</a>
@@ -14,23 +11,8 @@ For the related patent of this work, please see:
 <a href="https://patents.google.com/patent/CN113033308A/en?oq=CN113033308A">Team sports video game lens extraction method based on color features</a> (In the paper, I used "shot" as a video sequence photographed continuously by one camera, so the "lens" showed in the title of this patent may have been mistranslated.)
 
 ## background
-The authors of PWC-Net are thankfully already providing a reference implementation in PyTorch. However, its initial version did not reach the performance of the original Caffe version. This is why I created this repositroy, in which I replicated the performance of the official Caffe version by utilizing its weights.
-
-The official PyTorch implementation has adopted my approach of using the Caffe weights since then, which is why they are all performing equally well now. Many people have reported issues with CUDA when trying to get the official PyTorch version to run though, while my reimplementaiton does not seem to be subject to such problems.
-
-## setup
-To download the pre-trained models, run `bash download.bash`. These originate from the original authors, I just converted them to PyTorch.
-
-The correlation layer is implemented in CUDA using CuPy, which is why CuPy is a required dependency. It can be installed using `pip install cupy` or alternatively using one of the provided binary packages as outlined in the CuPy repository.
-
-## usage
-To run it on your own pair of images, use the following command. You can choose between two models, please make sure to see their paper / the code for more details.
-
-```
-python run.py --model default --first ./images/first.png --second ./images/second.png --out ./out.flo
-```
-
-I am afraid that I cannot guarantee that this reimplementation is correct. However, it produced results identical to the Caffe implementation of the original authors in the examples that I tried. Please feel free to contribute to this repository by submitting issues and pull requests.
+Key frame extraction is an important manner of video summarization. It can be used to interpret video content quickly. Existing approaches first partition the entire video into video clips by shot boundary detection, and then, extract key frames by frame clustering. However, in most team-sport videos, a video clip usually includes many events, and it is difficult to extract the key frames related to all of these events accurately, because different events of a game shot can have features of similar appearance. As is well known, most events in team-sport videos are attack and defense conversions, which are related to global translation. Therefore, by using fine-grained partition based on the global motion, a shot could be further partitioned into more video clips, from which more key frames could be extracted and they are related to the events.
+In this study, global horizontal motion is introduced to further partition video clips into fine-grained video clips. Furthermore, global motion statistics are utilized to extract candidate key frames. Finally, the representative key frames are extracted based on the spatial–temporal consistence and hierarchical clustering, and the redundant frames are removed.
 
 ## Video Summary Extraction System (demo)
 https://user-images.githubusercontent.com/112043923/205419245-7f6cc5e1-1f20-4d95-bb21-45a719ce6a70.mp4

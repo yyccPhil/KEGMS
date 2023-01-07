@@ -273,5 +273,14 @@ if __name__ == '__main__':
 #
 # 局部运动去搞这三帧
 #
-# 史诗级先斩后奏，比尔盖茨女婿那一手，果断安排
+# In the proposed scheme, only global motion is utilized,
+# and local motion is not considered. However, there are also
+# much relations between the events and local motions. Candidate
+# key frames are extracted from the video clips directly,
+# and there may be noise in the camera motions. In the future,
+# we will take into account the noise in the camera motion
+# and separate the local motion to study the relations between
+# global, local motion and key frames with events. Furthermore,
+# in this study, only team-sport videos were evaluated,
+# and more sports videos should be considered in the future.
 
