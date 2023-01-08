@@ -7,7 +7,7 @@ Here is the poster (<a href="https://doi.org/10.1007/s00530-021-00777-7" target=
 
 <a href="https://doi.org/10.1007/s00530-021-00777-7" rel="Paper_doi" target="_blank"><img src="poster_ChinaMM2020.png?raw=true" alt="Paper_doi" width="100%"></a>
 
-For the related patents of this work, please see:
+For the patents derived from this work, please see:
 <br />
 <a href="https://patents.google.com/patent/CN113032631A/en?oq=CN113032631A" target="_blank">Team sports video key frame extraction method based on global motion statistical characteristics</a>
 <br />
