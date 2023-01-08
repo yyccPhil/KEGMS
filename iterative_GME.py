@@ -1,8 +1,6 @@
-# adjust
-
 """
 Estimate the global motion by iterative optimization, and eliminate the interference of local motion through continuous iteration
-code_v3: create on 2020/3/10 by Yang Zhou (third author of the paper)
+code_v3: created on 2020/3/10 by Yang Zhou (third author of the paper), modified by Yuan (Phil) Yuan
 """
 
 from lib import flowlib_v2 as fl2
