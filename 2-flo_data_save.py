@@ -99,12 +99,12 @@ def param_estimate_y(flo_data, index_list, outlier_mat, iteration, thres):
     y_mat = None
     thres_auto = 0.0
     for iter in range(iteration):
-        # y_axis_list
-        # data
+        # y_axis_list (y-coordinate values of all points)
+        # data (the motion value corresponding to each point, which has been normalized to [0, 255])
         y_axis_list = [i[0] for i in index_list if i not in outline_index_list]
         data = [flo_data[i[0], i[1], 1] for i in index_list if i not in outline_index_list]
 
-        # fita_avg
+        # fita_avg (the fitted parameter values)
         fita_avg = LeastSquareFit(data, y_axis_list)
 
         data_new = np.arange(0, len(flo_data))
@@ -119,7 +119,7 @@ def param_estimate_y(flo_data, index_list, outlier_mat, iteration, thres):
 
         m_diff = np.abs(flo_data[:, :, 1] - y_mat)
 
-        # mask
+        # mask (a matrix with the same size as the original optical flow field, and all of the values are true or false. Used to indicate which are outliers)
         mask = np.where(m_diff > thres_auto, True, False)
         outlier_mat = outlier_mat | mask
         outline_index_list = np.argwhere(outlier_mat).tolist()

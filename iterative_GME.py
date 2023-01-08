@@ -1,8 +1,8 @@
 # adjust
 
 """
-使用迭代优化的方法对全局运动进行估计，通过不断迭代消除局部运动的干扰
-code_v3: create on 2020/3/10 by Yang Zhou
+Estimate the global motion by iterative optimization, and eliminate the interference of local motion through continuous iteration
+code_v3: create on 2020/3/10 by Yang Zhou (third author of the paper)
 """
 
 from lib import flowlib_v2 as fl2
@@ -59,7 +59,7 @@ def param_estimate_x(flo_data, index_list, outlier_mat, iteration):
     x_mat = None
     thres_auto = 0.0
     for iter in range(iteration):
-        # x_axis_list 里面存的是所有点的x坐标值
+        # x_axis_list (x-coordinate values of all points)
         x_axis_list = np.array([i[1] for i in index_list if i not in outline_index_list])
         x_axis_square = np.square(x_axis_list)
         data = np.array([flo_data[i[0], i[1], 0] for i in index_list if i not in outline_index_list])
@@ -67,7 +67,7 @@ def param_estimate_x(flo_data, index_list, outlier_mat, iteration):
         # plot remaining points
         # plt.scatter(x_axis_list, data, marker='.', c='y')
 
-        # fita_avg 里面是拟合出来的参数值
+        # fita_avg (the fitted parameter values)
         fita_avg = LeastSquareFit(data, [x_axis_list, x_axis_square])
         # print(fita_avg)
 
@@ -85,7 +85,7 @@ def param_estimate_x(flo_data, index_list, outlier_mat, iteration):
         x_mat = np.repeat(data_com, flo_data.shape[0], axis=0)
         m_diff = np.abs(flo_data[:, :, 0] - x_mat)
 
-        # mask 是一个和原始光流场大小一样的矩阵，里面值是true和false。用来指明哪些是异常点
+        # mask (a matrix with the same size as the original optical flow field, and all of the values are true or false. Used to indicate which are outliers)
         mask = np.where(m_diff > thres_auto, True, False)
 
         outlier_mat = outlier_mat | mask
@@ -109,7 +109,7 @@ def param_estimate_y(flo_data, index_list, outlier_mat, iteration):
     y_mat = None
     thres_auto = 0.0
     for iter in range(iteration):
-        # y_axis_list 里面存的是所有点的y坐标值
+        # y_axis_list (y-coordinate values of all points)
         y_axis_list = np.array([i[0] for i in index_list if i not in outline_index_list])
         y_axis_square = np.square(y_axis_list)
         data = np.array([flo_data[i[0], i[1], 1] for i in index_list if i not in outline_index_list])
@@ -117,7 +117,7 @@ def param_estimate_y(flo_data, index_list, outlier_mat, iteration):
         # plot remaining points
         # plt.scatter(y_axis_list, data, marker='.', c='y')
 
-        # fita_avg 里面是拟合出来的参数值
+        # fita_avg (the fitted parameter values)
         # start1 = time.time()
         fita_avg = LeastSquareFit(data, [y_axis_list, y_axis_square])
         # end1 = time.time()
@@ -138,7 +138,7 @@ def param_estimate_y(flo_data, index_list, outlier_mat, iteration):
 
         m_diff = np.abs(flo_data[:, :, 1] - y_mat)
 
-        # mask 是一个和原始光流场大小一样的矩阵，里面值是true和false。用来指明哪些是异常点
+        # mask (a matrix with the same size as the original optical flow field, and all of the values are true or false. Used to indicate which are outliers)
         mask = np.where(m_diff > thres_auto, True, False)
         outlier_mat = outlier_mat | mask
         outline_index_list = np.argwhere(outlier_mat).tolist()
@@ -168,7 +168,7 @@ def global_motion_estimation(flo_data, w=490, h=360):
 
     u = flo_data[:, :, 0]
     v = flo_data[:, :, 1]
-    rad = np.sqrt(u ** 2 + v ** 2)  # 光流场方向
+    rad = np.sqrt(u ** 2 + v ** 2)  # the direction of optical flow field
     maxrad = max(-1, np.max(rad))
 
     flo_data = np.clip(flo_data, -displace, displace)
@@ -268,19 +268,6 @@ if __name__ == '__main__':
     plt.imshow(flo_local_outlier_color)
     plt.show()
 
-# 15段讲，理论上，应该是从15段中找4段，再找一个是4帧。语义？？15段应该再合并为4段，每段再提1个
-# 抢断得找俩
-#
-# 局部运动去搞这三帧
-#
-# In the proposed scheme, only global motion is utilized,
-# and local motion is not considered. However, there are also
-# much relations between the events and local motions. Candidate
-# key frames are extracted from the video clips directly,
-# and there may be noise in the camera motions. In the future,
-# we will take into account the noise in the camera motion
-# and separate the local motion to study the relations between
-# global, local motion and key frames with events. Furthermore,
-# in this study, only team-sport videos were evaluated,
-# and more sports videos should be considered in the future.
 
+
+# Only global motion is utilized, and local motion is not considered. However, there are also much relations between the events and local motions, especially "steal" events.
